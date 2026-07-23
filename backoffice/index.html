@@ -48,6 +48,21 @@
   .intro{margin-bottom:28px;}
   .intro h2{font-size:1.6rem;margin-bottom:6px;}
   .intro p{color:var(--fg-dim);font-size:.88rem;}
+
+  .profile-section{
+    display:flex;align-items:center;gap:22px;
+    background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px;margin-bottom:34px;
+  }
+  .profile-photo{
+    width:84px;height:84px;border-radius:50%;overflow:hidden;flex-shrink:0;background:#000;
+    border:1px solid var(--line);
+  }
+  .profile-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .profile-info h3{font-size:1rem;margin-bottom:3px;}
+  .profile-info p{color:var(--fg-dim);font-size:.8rem;margin-bottom:12px;}
+  .profile-actions{display:flex;gap:10px;}
+  #profilePhotoInput{display:none;}
   .albums-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;}
   .album-card{
     background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);
@@ -148,6 +163,19 @@
 <main>
   <!-- ===== Écran 1 : liste des albums ===== -->
   <div id="screenAlbums">
+    <div class="profile-section">
+      <div class="profile-photo" id="profilePhotoPreview"></div>
+      <div class="profile-info">
+        <h3>Photo de profil</h3>
+        <p>Affichée en haut de la section "À propos" du site.</p>
+        <div class="profile-actions">
+          <button id="btnChangeProfilePhoto">Changer la photo</button>
+          <button class="primary hidden" id="btnSaveProfilePhoto">Enregistrer ✓</button>
+        </div>
+      </div>
+    </div>
+    <input type="file" id="profilePhotoInput" accept="image/*">
+
     <div class="intro">
       <h2>Tes albums</h2>
       <p>Clique sur un album pour ajouter, retirer ou réordonner des photos.</p>
@@ -230,6 +258,8 @@
 
   let CFG = loadConfig();
   let ALBUMS = {};
+  let PROFILE_PHOTO = '';
+  let profileDirty = false;
   let currentKey = null;
   let dirty = false;
 
@@ -298,11 +328,14 @@
       const match = text.match(/ALBUMS\s*=\s*(\{[\s\S]*\})\s*;?\s*$/);
       const objText = match ? match[1] : text;
       ALBUMS = new Function('return (' + objText + ')')();
+      const photoMatch = text.match(/PROFILE_PHOTO\s*=\s*"([^"]*)"/);
+      PROFILE_PHOTO = photoMatch ? photoMatch[1] : '';
       setStatusDot(true);
     }catch(e){
       toast("Impossible de charger les données depuis GitHub — vérifie les réglages", true);
     }
     renderAlbumsScreen();
+    renderProfilePhoto();
   }
 
   // ---------- écriture (commit direct via l'API Git) ----------
@@ -323,7 +356,7 @@
   }
 
   function generateFileContent(){
-    return `/* Données photos — mis à jour depuis le back-office le ${new Date().toLocaleString('fr-FR')} */\nwindow.ALBUMS = ${JSON.stringify(ALBUMS, null, 2)};\n`;
+    return `/* Données photos — mis à jour depuis le back-office le ${new Date().toLocaleString('fr-FR')} */\nwindow.PROFILE_PHOTO = ${JSON.stringify(PROFILE_PHOTO || '')};\n\nwindow.ALBUMS = ${JSON.stringify(ALBUMS, null, 2)};\n`;
   }
 
   async function commitToGitHub(message){
@@ -538,6 +571,46 @@
   ['dragleave','drop'].forEach(evt=> dropzone.addEventListener(evt, (e)=>{ e.preventDefault(); dropzone.classList.remove('drag'); }));
   dropzone.addEventListener('drop', (e)=> handleFiles(e.dataTransfer.files));
 
+  // ---------- photo de profil ----------
+  function renderProfilePhoto(){
+    const preview = document.getElementById('profilePhotoPreview');
+    preview.innerHTML = PROFILE_PHOTO ? `<img src="${PROFILE_PHOTO}" alt="">` : '';
+    document.getElementById('btnSaveProfilePhoto').classList.toggle('hidden', !profileDirty);
+  }
+  document.getElementById('btnChangeProfilePhoto').addEventListener('click', ()=>{
+    document.getElementById('profilePhotoInput').click();
+  });
+  document.getElementById('profilePhotoInput').addEventListener('change', async (e)=>{
+    const file = e.target.files[0];
+    e.target.value = '';
+    if(!file || !file.type.startsWith('image/')){ toast('Choisis une image valide', true); return; }
+    toast('Traitement de la photo...');
+    try{
+      PROFILE_PHOTO = await compressImage(file, 1000, 0.85);
+      profileDirty = true;
+      renderProfilePhoto();
+      toast('Photo prête — clique sur Enregistrer pour la publier');
+    }catch(err){
+      toast("Erreur lors du traitement de l'image", true);
+    }
+  });
+  document.getElementById('btnSaveProfilePhoto').addEventListener('click', async ()=>{
+    if(!isConfigured()){ toast('Connecte d\'abord ton GitHub (⚙️ en haut à droite)', true); openSettings(); return; }
+    const btn = document.getElementById('btnSaveProfilePhoto');
+    btn.disabled = true;
+    btn.textContent = 'Enregistrement...';
+    try{
+      await commitToGitHub('Mise à jour de la photo de profil via back-office');
+      profileDirty = false;
+      renderProfilePhoto();
+      toast('Photo de profil enregistrée ✓ — en ligne dans ~1 minute');
+    }catch(e){
+      toast('Erreur en enregistrant : ' + e.message, true);
+    }
+    btn.disabled = false;
+    btn.textContent = 'Enregistrer ✓';
+  });
+
   // ---------- démarrage ----------
   (function init(){
     if(CFG.owner && CFG.repo){
@@ -545,6 +618,7 @@
     }
     if(!isConfigured()){
       renderAlbumsScreen();
+      renderProfilePhoto();
       openSettings();
     } else {
       loadRemoteAlbums();
