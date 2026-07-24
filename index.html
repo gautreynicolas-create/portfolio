@@ -91,6 +91,29 @@
   .nav-cta:hover{background:var(--accent);color:#0a0a0b;border-color:var(--accent);}
   .burger{display:none;}
 
+  /* ---------- lang switcher ---------- */
+  .lang-switcher{position:relative;margin-left:22px;}
+  .lang-btn{
+    display:flex;align-items:center;gap:8px;border:1px solid var(--line);
+    padding:8px 14px;border-radius:100px;font-size:.82rem;color:var(--fg-dim);
+    background:transparent;cursor:none;transition:all .3s var(--ease);
+  }
+  .lang-btn:hover{border-color:var(--fg);color:var(--fg);}
+  .lang-btn .flag{font-size:1rem;line-height:1;}
+  .lang-menu{
+    position:absolute;top:calc(100% + 10px);right:0;background:var(--bg-soft);
+    border:1px solid var(--line);border-radius:14px;padding:6px;min-width:150px;
+    opacity:0;pointer-events:none;transform:translateY(-8px);
+    transition:all .25s var(--ease);z-index:50;
+  }
+  .lang-switcher.open .lang-menu{opacity:1;pointer-events:auto;transform:translateY(0);}
+  .lang-option{
+    display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;
+    font-size:.85rem;color:var(--fg-dim);transition:all .2s;width:100%;text-align:left;
+  }
+  .lang-option:hover{background:var(--line);color:var(--fg);}
+  .lang-option.active{color:var(--accent);}
+
   /* ---------- hero ---------- */
   .hero{
     min-height:100vh;display:flex;flex-direction:column;justify-content:center;
@@ -338,14 +361,23 @@
     <a href="#top" class="logo">nicolas<span>.</span>gautrey</a>
     <nav>
       <ul>
-        <li><a href="#about">À propos</a></li>
-        <li><a href="#resume">Parcours</a></li>
-        <li><a href="#work">Albums</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about" data-i18n="nav_about">À propos</a></li>
+        <li><a href="#resume" data-i18n="nav_resume">Parcours</a></li>
+        <li><a href="#work" data-i18n="nav_work">Albums</a></li>
+        <li><a href="#services" data-i18n="nav_services">Services</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
       </ul>
     </nav>
-    <a href="#contact" class="nav-cta magnetic">Discutons →</a>
+    <a href="#contact" class="nav-cta magnetic" data-i18n="nav_cta">Discutons →</a>
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang-btn magnetic" id="langBtn" type="button">
+        <span class="flag" id="langFlag">🇫🇷</span><span id="langLabel">FR</span>
+      </button>
+      <div class="lang-menu" id="langMenu">
+        <button class="lang-option magnetic" data-lang="fr" type="button">🇫🇷 Français</button>
+        <button class="lang-option magnetic" data-lang="en" type="button">🇬🇧 English</button>
+      </div>
+    </div>
   </header>
 
   <!-- ================= HERO ================= -->
@@ -354,21 +386,21 @@
     <div class="blob blob-2"></div>
     <div class="wrap">
       <h1>Nicolas<br><span class="outline">Gautrey</span></h1>
-      <p style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;color:var(--fg-dim);margin-top:14px;position:relative;z-index:1;">Expert en transformation digitale</p>
-      <p class="hero-sub">Je pousse l'évolution digitale à travers le branding et la communication liée aux actions digitales, en alliant photo, vidéo ou autres, du terrain sportif aux concerts.</p>
+      <p style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;color:var(--fg-dim);margin-top:14px;position:relative;z-index:1;" data-i18n="hero_subtitle">Expert en transformation digitale</p>
+      <p class="hero-sub" data-i18n="hero_desc">Je pousse l'évolution digitale à travers le branding et la communication liée aux actions digitales, en alliant photo, vidéo ou autres, du terrain sportif aux concerts.</p>
       <div class="hero-actions">
-        <a href="#work" class="btn btn-primary magnetic">Voir mes albums</a>
-        <a href="#contact" class="btn btn-ghost magnetic">Me contacter</a>
+        <a href="#work" class="btn btn-primary magnetic" data-i18n="hero_btn1">Voir mes albums</a>
+        <a href="#contact" class="btn btn-ghost magnetic" data-i18n="hero_btn2">Me contacter</a>
       </div>
     </div>
-    <div class="scroll-cue"><div class="line"></div> Scroll</div>
+    <div class="scroll-cue"><div class="line"></div> <span data-i18n="scroll_cue">Scroll</span></div>
   </section>
 
   <!-- ================= MARQUEE ================= -->
   <div class="marquee">
     <div class="marquee-track">
-      <span>Photographie Sport <em>✦</em> Concerts & Festivals <em>✦</em> Création de contenu <em>✦</em> Réseaux Sociaux <em>✦</em> Montage Vidéo <em>✦</em> Événementiel <em>✦</em> SEO/SEA <em>✦</em> Génération de leads <em>✦</em> Partenariats <em>✦</em></span>
-      <span>Photographie Sport <em>✦</em> Concerts & Festivals <em>✦</em> Création de contenu <em>✦</em> Réseaux Sociaux <em>✦</em> Montage Vidéo <em>✦</em> Événementiel <em>✦</em> SEO/SEA <em>✦</em> Génération de leads <em>✦</em> Partenariats <em>✦</em></span>
+      <span data-i18n="marquee_text">Photographie Sport <em>✦</em> Concerts & Festivals <em>✦</em> Création de contenu <em>✦</em> Réseaux Sociaux <em>✦</em> Montage Vidéo <em>✦</em> Événementiel <em>✦</em> SEO/SEA <em>✦</em> Génération de leads <em>✦</em> Partenariats <em>✦</em></span>
+      <span data-i18n="marquee_text">Photographie Sport <em>✦</em> Concerts & Festivals <em>✦</em> Création de contenu <em>✦</em> Réseaux Sociaux <em>✦</em> Montage Vidéo <em>✦</em> Événementiel <em>✦</em> SEO/SEA <em>✦</em> Génération de leads <em>✦</em> Partenariats <em>✦</em></span>
     </div>
   </div>
 
@@ -379,16 +411,16 @@
         <img id="profilePhoto" src="https://picsum.photos/seed/portrait/800/1000" alt="Photo de profil">
       </div>
       <div class="about-text reveal">
-        <span class="kicker">À propos</span>
-        <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);margin-bottom:24px;">Le digital et l'image au service du sport et de la culture.</h2>
-        <p>Je m'appelle <strong>Nicolas Gautrey</strong>. Actuellement en fin de Mastère « Expert en Stratégie et Transformation Digitale » à la Digital School de Brest, je mets mes compétences en <strong>communication stratégique</strong> et <strong>marketing digital</strong> au service de la visibilité des associations, ligues et structures sportives ou culturelles.</p>
-        <p>Sur le terrain, j'allie <strong>SEO/SEA</strong>, <strong>création de contenu</strong> et <strong>montage vidéo</strong> (Premiere Pro, After Effects) à un vrai instinct pour capter l'instant : matchs, concerts, événements locaux.</p>
-        <p><strong>Créatif, curieux et adaptable</strong>, je navigue aussi bien dans la stratégie digitale que dans la production de contenu, jusqu'à la conception de <strong>sites web</strong>, du SEO à l'UX/UI. Je suis aussi capable de <strong>suivre et gérer un projet digital de A à Z</strong>.</p>
+        <span class="kicker" data-i18n="about_kicker">À propos</span>
+        <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);margin-bottom:24px;" data-i18n="about_heading">Le digital et l'image au service du sport et de la culture.</h2>
+        <p data-i18n="about_p1">Je m'appelle <strong>Nicolas Gautrey</strong>. Actuellement en fin de Mastère « Expert en Stratégie et Transformation Digitale » à la Digital School de Brest, je mets mes compétences en <strong>communication stratégique</strong> et <strong>marketing digital</strong> au service de la visibilité des associations, ligues et structures sportives ou culturelles.</p>
+        <p data-i18n="about_p2">Sur le terrain, j'allie <strong>SEO/SEA</strong>, <strong>création de contenu</strong> et <strong>montage vidéo</strong> (Premiere Pro, After Effects) à un vrai instinct pour capter l'instant : matchs, concerts, événements locaux.</p>
+        <p data-i18n="about_p3"><strong>Créatif, curieux et adaptable</strong>, je navigue aussi bien dans la stratégie digitale que dans la production de contenu, jusqu'à la conception de <strong>sites web</strong>, du SEO à l'UX/UI. Je suis aussi capable de <strong>suivre et gérer un projet digital de A à Z</strong>.</p>
         <!-- [À PERSONNALISER] ajuste "20+" à ton vrai nombre d'événements couverts -->
         <div class="stats">
-          <div class="stat"><b>20+</b><span>Événements couverts</span></div>
-          <div class="stat"><b>2+</b><span>Ans en création de contenu</span></div>
-          <div class="stat"><b>Brest</b><span>Et alentours</span></div>
+          <div class="stat"><b>20+</b><span data-i18n="about_stat1">Événements couverts</span></div>
+          <div class="stat"><b>2+</b><span data-i18n="about_stat2">Ans en création de contenu</span></div>
+          <div class="stat"><b>Brest</b><span data-i18n="about_stat3">Et alentours</span></div>
         </div>
       </div>
     </div>
@@ -399,64 +431,64 @@
     <div class="wrap">
       <div class="section-head reveal">
         <div>
-          <span class="kicker">Parcours</span>
-          <h2>Expérience &<br>compétences.</h2>
+          <span class="kicker" data-i18n="resume_kicker">Parcours</span>
+          <h2 data-i18n="resume_heading">Expérience &<br>compétences.</h2>
         </div>
-        <p>Un résumé de mon CV : expériences, formation et compétences clés.</p>
+        <p data-i18n="resume_intro">Un résumé de mon CV : expériences, formation et compétences clés.</p>
       </div>
 
       <div class="timeline reveal">
         <div class="timeline-item">
-          <div class="timeline-date">2024 - Aujourd'hui</div>
+          <div class="timeline-date" data-i18n="tl1_date">2024 - Aujourd'hui</div>
           <div>
-            <h3 class="timeline-role">Chargé de webmarketing</h3>
+            <h3 class="timeline-role" data-i18n="tl1_role">Chargé de webmarketing</h3>
             <span class="timeline-company">AcommeAssure</span>
             <ul class="timeline-list">
-              <li>SEO, SEA et création de contenus social media</li>
-              <li>Analyse des performances marketing & tracking web</li>
-              <li>Optimisation UX/UI et acquisition client digitale</li>
+              <li data-i18n="tl1_li1">SEO, SEA et création de contenus social media</li>
+              <li data-i18n="tl1_li2">Analyse des performances marketing & tracking web</li>
+              <li data-i18n="tl1_li3">Optimisation UX/UI et acquisition client digitale</li>
             </ul>
           </div>
         </div>
         <div class="timeline-item">
           <div class="timeline-date">2023 - 2024</div>
           <div>
-            <h3 class="timeline-role">Responsable communication / Contenu</h3>
+            <h3 class="timeline-role" data-i18n="tl2_role">Responsable communication / Contenu</h3>
             <span class="timeline-company">Iroise Info et Abers Info</span>
             <ul class="timeline-list">
-              <li>Gestion des réseaux sociaux et partenariats locaux</li>
-              <li>Création de contenus photo & vidéo, montage et post-production</li>
-              <li>Promotion d'événements et communication locale</li>
+              <li data-i18n="tl2_li1">Gestion des réseaux sociaux et partenariats locaux</li>
+              <li data-i18n="tl2_li2">Création de contenus photo & vidéo, montage et post-production</li>
+              <li data-i18n="tl2_li3">Promotion d'événements et communication locale</li>
             </ul>
           </div>
         </div>
         <div class="timeline-item">
           <div class="timeline-date">2021 - 2023</div>
           <div>
-            <h3 class="timeline-role">Technicien méthode</h3>
+            <h3 class="timeline-role" data-i18n="tl3_role">Technicien méthode</h3>
             <span class="timeline-company">Naval Group</span>
             <ul class="timeline-list">
-              <li>Gestion administrative des documents techniques</li>
-              <li>Digitalisation des processus et suivi logistique</li>
+              <li data-i18n="tl3_li1">Gestion administrative des documents techniques</li>
+              <li data-i18n="tl3_li2">Digitalisation des processus et suivi logistique</li>
             </ul>
           </div>
         </div>
       </div>
 
       <div class="skills-wrap reveal">
-        <span class="kicker">Formation</span>
+        <span class="kicker" data-i18n="formation_kicker">Formation</span>
         <div class="timeline">
           <div class="timeline-item" style="border-top:none;">
-            <div class="timeline-date">En cours</div>
+            <div class="timeline-date" data-i18n="formation1_date">En cours</div>
             <div>
-              <h3 class="timeline-role" style="font-size:1.1rem;">Mastère, Expert en stratégie et transformation digitale</h3>
+              <h3 class="timeline-role" style="font-size:1.1rem;" data-i18n="formation1_title">Mastère, Expert en stratégie et transformation digitale</h3>
               <span class="timeline-company">La Digital School · Brest Open Campus</span>
             </div>
           </div>
           <div class="timeline-item">
-            <div class="timeline-date">Obtenu</div>
+            <div class="timeline-date" data-i18n="formation2_date">Obtenu</div>
             <div>
-              <h3 class="timeline-role" style="font-size:1.1rem;">Bachelor, Chef de projet E-Business</h3>
+              <h3 class="timeline-role" style="font-size:1.1rem;" data-i18n="formation2_title">Bachelor, Chef de projet E-Business</h3>
               <span class="timeline-company">La Digital School · Brest Open Campus</span>
             </div>
           </div>
@@ -464,7 +496,7 @@
       </div>
 
       <div class="skills-wrap reveal">
-        <span class="kicker">Compétences</span>
+        <span class="kicker" data-i18n="skills_kicker">Compétences</span>
         <div class="skills-row">
           <span class="skill-tag"><img src="https://cdn.simpleicons.org/adobepremierepro/8A8A8F" alt="">Premiere Pro</span>
           <span class="skill-tag"><img src="https://cdn.simpleicons.org/adobeillustrator/8A8A8F" alt="">Illustrator</span>
@@ -475,7 +507,7 @@
           <span class="skill-tag"><img src="https://cdn.simpleicons.org/googleads/8A8A8F" alt="">Google Ads</span>
           <span class="skill-tag"><img src="https://cdn.simpleicons.org/wordpress/8A8A8F" alt="">WordPress</span>
           <span class="skill-tag"><img src="https://cdn.simpleicons.org/notion/8A8A8F" alt="">Notion</span>
-          <span class="skill-tag">Anglais C1</span>
+          <span class="skill-tag" data-i18n="skill_english">Anglais C1</span>
         </div>
       </div>
     </div>
@@ -486,10 +518,10 @@
     <div class="wrap">
       <div class="section-head reveal">
         <div>
-          <span class="kicker">Portfolio</span>
-          <h2>Sport, concerts<br>& événementiel.</h2>
+          <span class="kicker" data-i18n="work_kicker">Portfolio</span>
+          <h2 data-i18n="work_heading">Sport, concerts<br>& événementiel.</h2>
         </div>
-        <p>Survole un album pour voir défiler les meilleures photos. Clique dessus pour ouvrir la série complète.</p>
+        <p data-i18n="work_intro">Survole un album pour voir défiler les meilleures photos. Clique dessus pour ouvrir la série complète.</p>
       </div>
 
       <!-- Les cartes sont générées par JS à partir de l'objet ALBUMS (voir <script>).
@@ -521,30 +553,30 @@
     <div class="wrap">
       <div class="section-head reveal">
         <div>
-          <span class="kicker">Ce que je fais</span>
-          <h2>Services & expertise.</h2>
+          <span class="kicker" data-i18n="services_kicker">Ce que je fais</span>
+          <h2 data-i18n="services_heading">Services & expertise.</h2>
         </div>
       </div>
       <div class="services reveal">
         <div class="service">
           <span class="num">01</span>
-          <h3>Photo, Vidéo & Montage</h3>
-          <p>Couverture de matchs, concerts et événements, puis montage et retouche pour des contenus prêts à publier, formatés réseaux.</p>
+          <h3 data-i18n="service1_title">Photo, Vidéo & Montage</h3>
+          <p data-i18n="service1_desc">Couverture de matchs, concerts et événements, puis montage et retouche pour des contenus prêts à publier, formatés réseaux.</p>
         </div>
         <div class="service">
           <span class="num">02</span>
-          <h3>Stratégie Réseaux Sociaux</h3>
-          <p>Création de contenu, community management et visuels pensés pour la visibilité des marques.</p>
+          <h3 data-i18n="service2_title">Stratégie Réseaux Sociaux</h3>
+          <p data-i18n="service2_desc">Création de contenu, community management et visuels pensés pour la visibilité des marques.</p>
         </div>
         <div class="service">
           <span class="num">03</span>
-          <h3>Acquisition clients</h3>
-          <p>SEO, SEA, Meta Ads, Google Ads : des campagnes pensées pour générer des leads et faire grandir ta visibilité.</p>
+          <h3 data-i18n="service3_title">Acquisition clients</h3>
+          <p data-i18n="service3_desc">SEO, SEA, Meta Ads, Google Ads : des campagnes pensées pour générer des leads et faire grandir ta visibilité.</p>
         </div>
         <div class="service">
           <span class="num">04</span>
-          <h3>Création de site web</h3>
-          <p>Sites vitrines rapides et sur-mesure, pensés SEO et UX, pour prolonger l'image en ligne.</p>
+          <h3 data-i18n="service4_title">Création de site web</h3>
+          <p data-i18n="service4_desc">Sites vitrines rapides et sur-mesure, pensés SEO et UX, pour prolonger l'image en ligne.</p>
         </div>
       </div>
     </div>
@@ -553,8 +585,8 @@
   <!-- ================= TESTIMONIAL ================= -->
   <section>
     <div class="wrap quote-wrap reveal">
-      <p>"[À PERSONNALISER] Nicolas a su capturer exactement l'énergie de l'événement : des contenus livrés vite, et parfaitement calibrés pour nos réseaux."</p>
-      <div class="quote-who">Prénom Nom, Responsable communication @ Structure</div>
+      <p data-i18n="testimonial_quote">"[À PERSONNALISER] Nicolas a su capturer exactement l'énergie de l'événement : des contenus livrés vite, et parfaitement calibrés pour nos réseaux."</p>
+      <div class="quote-who" data-i18n="testimonial_who">Prénom Nom, Responsable communication @ Structure</div>
     </div>
   </section>
 
@@ -563,10 +595,10 @@
     <div class="wrap">
       <div class="contact reveal">
         <div class="blob blob-1"></div>
-        <span class="kicker">Contact</span>
-        <h2>Un projet en tête ?<br>Parlons-en.</h2>
+        <span class="kicker" data-i18n="contact_kicker">Contact</span>
+        <h2 data-i18n="contact_heading">Un projet en tête ?<br>Parlons-en.</h2>
         <a href="mailto:nicolasgautrey@gmail.com" class="contact-email magnetic">nicolasgautrey@gmail.com</a>
-        <p style="margin-top:14px;color:var(--fg-dim);font-size:.9rem;position:relative;z-index:1;">06 02 59 76 60 · Brest et alentours</p>
+        <p style="margin-top:14px;color:var(--fg-dim);font-size:.9rem;position:relative;z-index:1;" data-i18n="contact_location">06 02 59 76 60 · Brest et alentours</p>
         <div class="socials">
           <a href="#" class="magnetic">LinkedIn</a>
           <a href="#" class="magnetic">Instagram</a>
@@ -577,11 +609,158 @@
   </section>
 
   <footer class="wrap">
-    <span>© 2026 Nicolas Gautrey. Tous droits réservés.</span>
-    <span>Fait avec soin à Brest.</span>
+    <span data-i18n="footer_rights">© 2026 Nicolas Gautrey. Tous droits réservés.</span>
+    <span data-i18n="footer_made">Fait avec soin à Brest.</span>
   </footer>
 
 <script>
+  // ==========================================================
+  // i18n — sélecteur de langue FR/EN
+  // ==========================================================
+  const TRANSLATIONS = {
+    fr: {
+      nav_about: "À propos", nav_resume: "Parcours", nav_work: "Albums", nav_services: "Services", nav_contact: "Contact",
+      nav_cta: "Discutons →",
+      hero_subtitle: "Expert en transformation digitale",
+      hero_desc: "Je pousse l'évolution digitale à travers le branding et la communication liée aux actions digitales, en alliant photo, vidéo ou autres, du terrain sportif aux concerts.",
+      hero_btn1: "Voir mes albums", hero_btn2: "Me contacter", scroll_cue: "Scroll",
+      marquee_text: "Photographie Sport <em>✦</em> Concerts & Festivals <em>✦</em> Création de contenu <em>✦</em> Réseaux Sociaux <em>✦</em> Montage Vidéo <em>✦</em> Événementiel <em>✦</em> SEO/SEA <em>✦</em> Génération de leads <em>✦</em> Partenariats <em>✦</em>",
+      about_kicker: "À propos",
+      about_heading: "Le digital et l'image au service du sport et de la culture.",
+      about_p1: "Je m'appelle <strong>Nicolas Gautrey</strong>. Actuellement en fin de Mastère « Expert en Stratégie et Transformation Digitale » à la Digital School de Brest, je mets mes compétences en <strong>communication stratégique</strong> et <strong>marketing digital</strong> au service de la visibilité des associations, ligues et structures sportives ou culturelles.",
+      about_p2: "Sur le terrain, j'allie <strong>SEO/SEA</strong>, <strong>création de contenu</strong> et <strong>montage vidéo</strong> (Premiere Pro, After Effects) à un vrai instinct pour capter l'instant : matchs, concerts, événements locaux.",
+      about_p3: "<strong>Créatif, curieux et adaptable</strong>, je navigue aussi bien dans la stratégie digitale que dans la production de contenu, jusqu'à la conception de <strong>sites web</strong>, du SEO à l'UX/UI. Je suis aussi capable de <strong>suivre et gérer un projet digital de A à Z</strong>.",
+      about_stat1: "Événements couverts", about_stat2: "Ans en création de contenu", about_stat3: "Et alentours",
+      resume_kicker: "Parcours", resume_heading: "Expérience &<br>compétences.",
+      resume_intro: "Un résumé de mon CV : expériences, formation et compétences clés.",
+      tl1_date: "2024 - Aujourd'hui", tl1_role: "Chargé de webmarketing",
+      tl1_li1: "SEO, SEA et création de contenus social media",
+      tl1_li2: "Analyse des performances marketing & tracking web",
+      tl1_li3: "Optimisation UX/UI et acquisition client digitale",
+      tl2_role: "Responsable communication / Contenu",
+      tl2_li1: "Gestion des réseaux sociaux et partenariats locaux",
+      tl2_li2: "Création de contenus photo & vidéo, montage et post-production",
+      tl2_li3: "Promotion d'événements et communication locale",
+      tl3_role: "Technicien méthode",
+      tl3_li1: "Gestion administrative des documents techniques",
+      tl3_li2: "Digitalisation des processus et suivi logistique",
+      formation_kicker: "Formation", formation1_date: "En cours",
+      formation1_title: "Mastère, Expert en stratégie et transformation digitale",
+      formation2_date: "Obtenu", formation2_title: "Bachelor, Chef de projet E-Business",
+      skills_kicker: "Compétences", skill_english: "Anglais C1",
+      work_kicker: "Portfolio", work_heading: "Sport, concerts<br>& événementiel.",
+      work_intro: "Survole un album pour voir défiler les meilleures photos. Clique dessus pour ouvrir la série complète.",
+      album_view: "Voir l'album ↗",
+      services_kicker: "Ce que je fais", services_heading: "Services & expertise.",
+      service1_title: "Photo, Vidéo & Montage",
+      service1_desc: "Couverture de matchs, concerts et événements, puis montage et retouche pour des contenus prêts à publier, formatés réseaux.",
+      service2_title: "Stratégie Réseaux Sociaux",
+      service2_desc: "Création de contenu, community management et visuels pensés pour la visibilité des marques.",
+      service3_title: "Acquisition clients",
+      service3_desc: "SEO, SEA, Meta Ads, Google Ads : des campagnes pensées pour générer des leads et faire grandir ta visibilité.",
+      service4_title: "Création de site web",
+      service4_desc: "Sites vitrines rapides et sur-mesure, pensés SEO et UX, pour prolonger l'image en ligne.",
+      testimonial_quote: "\"[À PERSONNALISER] Nicolas a su capturer exactement l'énergie de l'événement : des contenus livrés vite, et parfaitement calibrés pour nos réseaux.\"",
+      testimonial_who: "Prénom Nom, Responsable communication @ Structure",
+      contact_kicker: "Contact", contact_heading: "Un projet en tête ?<br>Parlons-en.",
+      contact_location: "06 02 59 76 60 · Brest et alentours",
+      footer_rights: "© 2026 Nicolas Gautrey. Tous droits réservés.", footer_made: "Fait avec soin à Brest."
+    },
+    en: {
+      nav_about: "About", nav_resume: "Experience", nav_work: "Albums", nav_services: "Services", nav_contact: "Contact",
+      nav_cta: "Let's talk →",
+      hero_subtitle: "Digital transformation expert",
+      hero_desc: "I drive digital growth through branding and communication built around digital action, blending photo, video and more, from the sports field to the concert stage.",
+      hero_btn1: "View my albums", hero_btn2: "Get in touch", scroll_cue: "Scroll",
+      marquee_text: "Sports Photography <em>✦</em> Concerts & Festivals <em>✦</em> Content Creation <em>✦</em> Social Media <em>✦</em> Video Editing <em>✦</em> Events <em>✦</em> SEO/SEA <em>✦</em> Lead Generation <em>✦</em> Partnerships <em>✦</em>",
+      about_kicker: "About",
+      about_heading: "Digital and image working for sport and culture.",
+      about_p1: "My name is <strong>Nicolas Gautrey</strong>. Currently finishing a Master's degree in \"Digital Strategy and Transformation Expert\" at Digital School Brest, I put my skills in <strong>strategic communication</strong> and <strong>digital marketing</strong> to work for the visibility of sports and cultural associations, leagues and organizations.",
+      about_p2: "On the ground, I combine <strong>SEO/SEA</strong>, <strong>content creation</strong> and <strong>video editing</strong> (Premiere Pro, After Effects) with a real instinct for capturing the moment: matches, concerts, local events.",
+      about_p3: "<strong>Creative, curious and adaptable</strong>, I move comfortably between digital strategy and content production, all the way to <strong>website design</strong>, from SEO to UX/UI. I'm also able to <strong>manage a digital project from A to Z</strong>.",
+      about_stat1: "Events covered", about_stat2: "Years in content creation", about_stat3: "And surrounding area",
+      resume_kicker: "Experience", resume_heading: "Experience &<br>skills.",
+      resume_intro: "A summary of my résumé: experience, education and key skills.",
+      tl1_date: "2024 - Present", tl1_role: "Webmarketing Manager",
+      tl1_li1: "SEO, SEA and social media content creation",
+      tl1_li2: "Marketing performance analysis & web tracking",
+      tl1_li3: "UX/UI optimization and digital client acquisition",
+      tl2_role: "Communications / Content Manager",
+      tl2_li1: "Social media management and local partnerships",
+      tl2_li2: "Photo & video content creation, editing and post-production",
+      tl2_li3: "Event promotion and local communications",
+      tl3_role: "Methods Technician",
+      tl3_li1: "Administrative management of technical documents",
+      tl3_li2: "Process digitalization and logistics follow-up",
+      formation_kicker: "Education", formation1_date: "Ongoing",
+      formation1_title: "Master's degree, Expert in Digital Strategy and Transformation",
+      formation2_date: "Completed", formation2_title: "Bachelor's degree, E-Business Project Manager",
+      skills_kicker: "Skills", skill_english: "English C1",
+      work_kicker: "Portfolio", work_heading: "Sport, concerts<br>& events.",
+      work_intro: "Hover over an album to see the best photos scroll by. Click to open the full series.",
+      album_view: "View album ↗",
+      services_kicker: "What I do", services_heading: "Services & expertise.",
+      service1_title: "Photo, Video & Editing",
+      service1_desc: "Coverage of matches, concerts and events, then editing and retouching for content ready to publish, formatted for social media.",
+      service2_title: "Social Media Strategy",
+      service2_desc: "Content creation, community management and visuals designed for brand visibility.",
+      service3_title: "Client Acquisition",
+      service3_desc: "SEO, SEA, Meta Ads, Google Ads: campaigns built to generate leads and grow your visibility.",
+      service4_title: "Website Creation",
+      service4_desc: "Fast, custom-built showcase websites, designed with SEO and UX in mind, to extend your image online.",
+      testimonial_quote: "\"[TO CUSTOMIZE] Nicolas captured exactly the energy of the event: content delivered fast, and perfectly tailored for our social media.\"",
+      testimonial_who: "First Name Last Name, Communications Manager @ Organization",
+      contact_kicker: "Contact", contact_heading: "Got a project in mind?<br>Let's talk.",
+      contact_location: "06 02 59 76 60 · Brest, France",
+      footer_rights: "© 2026 Nicolas Gautrey. All rights reserved.", footer_made: "Made with care in Brest."
+    }
+  };
+
+  let currentLang = localStorage.getItem('site_lang') || 'fr';
+
+  function t(key){
+    return (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) || (TRANSLATIONS.fr[key] || '');
+  }
+
+  function applyLang(lang){
+    currentLang = TRANSLATIONS[lang] ? lang : 'fr';
+    document.documentElement.lang = currentLang;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if(TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key] !== undefined){
+        el.innerHTML = TRANSLATIONS[currentLang][key];
+      }
+    });
+    const flagEl = document.getElementById('langFlag');
+    const labelEl = document.getElementById('langLabel');
+    if(flagEl) flagEl.textContent = currentLang === 'fr' ? '🇫🇷' : '🇬🇧';
+    if(labelEl) labelEl.textContent = currentLang.toUpperCase();
+    document.querySelectorAll('.lang-option').forEach(btn=>{
+      btn.classList.toggle('active', btn.dataset.lang === currentLang);
+    });
+    localStorage.setItem('site_lang', currentLang);
+  }
+
+  applyLang(currentLang);
+
+  const langSwitcher = document.getElementById('langSwitcher');
+  const langBtn = document.getElementById('langBtn');
+  if(langBtn){
+    langBtn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      langSwitcher.classList.toggle('open');
+    });
+  }
+  document.querySelectorAll('.lang-option').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      applyLang(btn.dataset.lang);
+      langSwitcher.classList.remove('open');
+    });
+  });
+  document.addEventListener('click', (e)=>{
+    if(langSwitcher && !langSwitcher.contains(e.target)) langSwitcher.classList.remove('open');
+  });
+
   // ---- custom cursor ----
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -646,7 +825,7 @@
       <div class="album-overlay">
         <span class="album-count">${album.photos.length} photos</span>
         <h3 class="album-title">${album.title}</h3>
-        <span class="album-view">Voir l'album ↗</span>
+        <span class="album-view" data-i18n="album_view">${t('album_view')}</span>
       </div>
     `;
     albumGrid.appendChild(card);
