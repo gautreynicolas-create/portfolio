@@ -359,7 +359,7 @@
     return `/* Données photos — mis à jour depuis le back-office le ${new Date().toLocaleString('fr-FR')} */\nwindow.PROFILE_PHOTO = ${JSON.stringify(PROFILE_PHOTO || '')};\n\nwindow.ALBUMS = ${JSON.stringify(ALBUMS, null, 2)};\n`;
   }
 
-  async function commitToGitHub(message){
+  async function commitToGitHub(message, attempt = 1){
     const ref = await ghApi(`/git/ref/heads/${CFG.branch}`);
     const latestCommitSha = ref.object.sha;
     const commit = await ghApi(`/git/commits/${latestCommitSha}`);
@@ -384,10 +384,19 @@
       body: JSON.stringify({ message, tree: tree.sha, parents: [latestCommitSha] })
     });
 
-    await ghApi(`/git/refs/heads/${CFG.branch}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ sha: newCommit.sha })
-    });
+    try{
+      await ghApi(`/git/refs/heads/${CFG.branch}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ sha: newCommit.sha })
+      });
+    }catch(e){
+      // La branche a bougé entre-temps (quelqu'un/quelque chose d'autre a commité) —
+      // on retente automatiquement en repartant du tout dernier état, 2 fois max.
+      if(attempt < 3 && /not a fast forward|422/i.test(e.message)){
+        return commitToGitHub(message, attempt + 1);
+      }
+      throw e;
+    }
   }
 
   // ---------- écran 1 : liste des albums ----------
