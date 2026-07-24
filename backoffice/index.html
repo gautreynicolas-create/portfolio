@@ -231,8 +231,8 @@
       <label>Jeton d'accès personnel (token)</label>
       <input type="password" id="cfgToken" placeholder="ghp_...">
       <div class="help">
-        Sur GitHub : Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token. Donne-lui accès uniquement au repo "portfolio", permission "Contents: Read and write".
-        <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">Créer un token →</a>
+        Utilise un token <strong>classique</strong> (pas "fine-grained" — ces derniers ne supportent pas encore l'enregistrement). Sur GitHub : Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token. Coche uniquement la case "repo".
+        <a href="https://github.com/settings/tokens/new?scopes=repo&description=Back-office%20portfolio" target="_blank">Créer un token classique →</a>
       </div>
     </div>
     <div class="modal-actions">
