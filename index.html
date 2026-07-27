@@ -376,6 +376,7 @@
       <div class="lang-menu" id="langMenu">
         <button class="lang-option magnetic" data-lang="fr" type="button">🇫🇷 Français</button>
         <button class="lang-option magnetic" data-lang="en" type="button">🇬🇧 English</button>
+        <button class="lang-option magnetic" data-lang="es" type="button">🇪🇸 Español</button>
       </div>
     </div>
   </header>
@@ -711,6 +712,54 @@
       contact_kicker: "Contact", contact_heading: "Got a project in mind?<br>Let's talk.",
       contact_location: "+33602597660 · Brest, France",
       footer_rights: "© 2026 Nicolas Gautrey. All rights reserved.", footer_made: "Made with care in Brest."
+    },
+    es: {
+      nav_about: "Sobre mí", nav_resume: "Experiencia", nav_work: "Álbumes", nav_services: "Servicios", nav_contact: "Contacto",
+      nav_cta: "Hablemos →",
+      hero_subtitle: "Experto en transformación digital",
+      hero_desc: "Impulso la evolución digital a través del branding y la comunicación ligada a las acciones digitales, combinando foto, vídeo y más, desde el terreno deportivo hasta los conciertos.",
+      hero_btn1: "Ver mis álbumes", hero_btn2: "Contactarme", scroll_cue: "Scroll",
+      marquee_text: "Fotografía Deportiva <em>✦</em> Conciertos y Festivales <em>✦</em> Creación de Contenido <em>✦</em> Redes Sociales <em>✦</em> Edición de Vídeo <em>✦</em> Eventos <em>✦</em> SEO/SEA <em>✦</em> Generación de Leads <em>✦</em> Colaboraciones <em>✦</em>",
+      about_kicker: "Sobre mí",
+      about_heading: "Lo digital y la imagen al servicio del deporte y la cultura.",
+      about_p1: "Me llamo <strong>Nicolas Gautrey</strong>. Actualmente finalizando un Máster en «Experto en Estrategia y Transformación Digital» en la Digital School de Brest, pongo mis competencias en <strong>comunicación estratégica</strong> y <strong>marketing digital</strong> al servicio de la visibilidad de asociaciones, ligas y estructuras deportivas o culturales.",
+      about_p2: "Sobre el terreno, combino <strong>SEO/SEA</strong>, <strong>creación de contenido</strong> y <strong>edición de vídeo</strong> (Premiere Pro, After Effects) con un verdadero instinto para captar el instante: partidos, conciertos, eventos locales.",
+      about_p3: "<strong>Creativo, curioso y adaptable</strong>, me muevo tanto en la estrategia digital como en la producción de contenido, hasta el diseño de <strong>sitios web</strong>, desde el SEO hasta el UX/UI. También soy capaz de <strong>gestionar un proyecto digital de la A a la Z</strong>.",
+      about_stat1: "Eventos cubiertos", about_stat2: "Años en creación de contenido", about_stat3: "Y alrededores",
+      resume_kicker: "Experiencia", resume_heading: "Experiencia y<br>competencias.",
+      resume_intro: "Un resumen de mi currículum: experiencia, formación y competencias clave.",
+      tl1_date: "2024 - Actualidad", tl1_role: "Responsable de webmarketing",
+      tl1_li1: "SEO, SEA y creación de contenidos para redes sociales",
+      tl1_li2: "Análisis del rendimiento de marketing y seguimiento web",
+      tl1_li3: "Optimización UX/UI y adquisición de clientes digital",
+      tl2_role: "Responsable de comunicación / Contenido",
+      tl2_li1: "Gestión de redes sociales y colaboraciones locales",
+      tl2_li2: "Creación de contenidos foto y vídeo, edición y postproducción",
+      tl2_li3: "Promoción de eventos y comunicación local",
+      tl3_role: "Técnico de métodos",
+      tl3_li1: "Gestión administrativa de documentos técnicos",
+      tl3_li2: "Digitalización de procesos y seguimiento logístico",
+      formation_kicker: "Formación", formation1_date: "En curso",
+      formation1_title: "Máster, Experto en estrategia y transformación digital",
+      formation2_date: "Obtenido", formation2_title: "Grado, Jefe de proyecto E-Business",
+      skills_kicker: "Competencias", skill_english: "Inglés C1",
+      work_kicker: "Portafolio", work_heading: "Deporte, conciertos<br>y eventos.",
+      work_intro: "Pasa el cursor sobre un álbum para ver desfilar las mejores fotos. Haz clic para abrir la serie completa.",
+      album_view: "Ver álbum ↗",
+      services_kicker: "Lo que hago", services_heading: "Servicios y experiencia.",
+      service1_title: "Foto, Vídeo y Edición",
+      service1_desc: "Cobertura de partidos, conciertos y eventos, seguida de edición y retoque para contenidos listos para publicar, formateados para redes.",
+      service2_title: "Estrategia de Redes Sociales",
+      service2_desc: "Creación de contenido, gestión de comunidad y visuales pensados para la visibilidad de las marcas.",
+      service3_title: "Adquisición de clientes",
+      service3_desc: "SEO, SEA, Meta Ads, Google Ads: campañas pensadas para generar leads y hacer crecer tu visibilidad.",
+      service4_title: "Creación de sitios web",
+      service4_desc: "Sitios vitrina rápidos y a medida, pensados para SEO y UX, para extender tu imagen en línea.",
+      testimonial_quote: "\"La creatividad da paso al instinto: capturar el instante antes de que se escape, para que la imagen cuente lo que las palabras no dicen.\"",
+      testimonial_who: "Nicolas Gautrey",
+      contact_kicker: "Contacto", contact_heading: "¿Un proyecto en mente?<br>Hablemos.",
+      contact_location: "+33602597660 · Brest y alrededores",
+      footer_rights: "© 2026 Nicolas Gautrey. Todos los derechos reservados.", footer_made: "Hecho con cuidado en Brest."
     }
   };
 
@@ -731,7 +780,8 @@
     });
     const flagEl = document.getElementById('langFlag');
     const labelEl = document.getElementById('langLabel');
-    if(flagEl) flagEl.textContent = currentLang === 'fr' ? '🇫🇷' : '🇬🇧';
+    const FLAGS = { fr: '🇫🇷', en: '🇬🇧', es: '🇪🇸' };
+    if(flagEl) flagEl.textContent = FLAGS[currentLang] || '🇫🇷';
     if(labelEl) labelEl.textContent = currentLang.toUpperCase();
     document.querySelectorAll('.lang-option').forEach(btn=>{
       btn.classList.toggle('active', btn.dataset.lang === currentLang);
