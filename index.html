@@ -110,9 +110,11 @@
   .lang-option{
     display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;
     font-size:.85rem;color:var(--fg-dim);transition:all .2s;width:100%;text-align:left;
+    background:none;border:none;font-family:inherit;cursor:none;
   }
   .lang-option:hover{background:var(--line);color:var(--fg);}
-  .lang-option.active{color:var(--accent);}
+  .lang-option.active{background:rgba(212,255,79,.14);color:var(--accent);}
+  .lang-option.active:hover{background:rgba(212,255,79,.22);}
 
   /* ---------- hero ---------- */
   .hero{
